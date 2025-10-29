@@ -1,13 +1,13 @@
-<div id="promotional" class="p-4 m-4 max-w-5xl mx-auto mt-20 text-zinc-900 dark:text-zinc-200">
+<div id="promotional" class="p-4 m-4 max-w-5xl mx-auto mt-10 text-zinc-900 dark:text-zinc-200">
   <!-- Título -->
-  <h2>
+  <h2 class="mb-2">
     <span class="titulos">Vídeo Promocional</span>
   </h2>
 
   <!-- Vídeo Promocional -->
   <div class="mt-4 w-full rounded-xl overflow-hidden shadow-md shadow-black/20">
     <video 
-      src="/assets/videos/promocional.mp4" 
+      src="https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Promocional/Promotional.mp4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&ga=1" 
       controls 
       class="w-full rounded-xl"
     ></video>
@@ -21,7 +21,7 @@
   <form class="mt-3 flex gap-2 items-start" (submit)="openWhatsApp($event)">
     <!-- Textarea maior -->
     <textarea
-      placeholder="Escreva a sua mensagem"
+      placeholder="Escreva a tua mensagem"
       [(ngModel)]="mensagem"
       name="mensagem"
       rows="5"

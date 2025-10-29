@@ -1,51 +1,48 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-headliners',
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './headliners.component.html',
   styleUrl: './headliners.component.css',
 })
-export class HeadlinersComponent {
+export class HeadlinersComponent implements OnInit {
   @ViewChild('carousel', { static: false })
   carousel!: ElementRef<HTMLDivElement>;
 
-  bands = [
+  cartazes = [
     {
-      image: '/images/band1.jpg',
-      name: 'Corduray Gary',
-      details: '1st July 9pm - Main Stage',
+      image:
+        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Cartazes/Bar21.png?ga=1',
+      barname: 'Bar Café 21',
+      date: new Date(2025, 9, 18, 22, 0),
+      location: 'Largo Principal, Murtede',
+      mapsLink: 'https://www.google.com/maps?q=Bar+Café+21,+Viseu',
     },
     {
-      image: '/images/band2.jpg',
-      name: 'Corduray Gary',
-      details: '2nd July 9pm - Main Stage',
+      image:
+        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Cartazes/HardBar.png?ga=1',
+      barname: 'HardBar',
+      date: new Date(2025, 9, 31, 23, 0),
+      location: 'Largo 31 Agosto, Gafanha da Nazaré',
+      mapsLink: 'https://www.google.com/maps?q=Main+Stage,+Porto',
     },
     {
-      image: '/images/band3.jpg',
-      name: 'Corduray Gary',
-      details: '3rd July 9pm - Main Stage',
+      image:
+        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Cartazes/TheBrothers.png?ga=1',
+      barname: 'The Brothers',
+      date: new Date(2025, 9, 25, 23, 0),
+      location: 'Rua da Paz, Viseu',
+      mapsLink: 'https://maps.app.goo.gl/NYnAWZL33Sk1JGMX6',
     },
     {
-      image: '/images/band4.jpg',
-      name: 'Corduray Gary',
-      details: '4th July 9pm - Main Stage',
-    },
-    {
-      image: '/images/band5.jpg',
-      name: 'Corduray Gary',
-      details: '5th July 9pm - Main Stage',
-    },
-    {
-      image: '/images/band6.jpg',
-      name: 'Corduray Gary',
-      details: '6th July 9pm - Main Stage',
-    },
-    {
-      image: '/images/band7.jpg',
-      name: 'Corduray Gary',
-      details: '7th July 9pm - Main Stage',
+      image:
+        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Cartazes/TheGarden.png?ga=1',
+      barname: 'The Garden',
+      date: new Date(2025, 10, 1, 22, 0),
+      location: 'Av. Visc. De Salreu, Estarreja',
+      mapsLink: 'https://www.google.com/maps?q=Main+Stage,+Lisboa',
     },
   ];
 
@@ -101,5 +98,15 @@ export class HeadlinersComponent {
       const walk = (x - this.startX) * 1.5;
       carouselEl.scrollLeft = this.scrollLeft - walk;
     });
+  }
+
+  ngOnInit() {
+    const hoje = new Date();
+
+    this.cartazes = this.cartazes
+      // filtra apenas os eventos que ainda vão acontecer (hoje ou no futuro)
+      .filter((c) => c.date >= hoje)
+      // ordena pela data (mais próxima primeiro)
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
   }
 }

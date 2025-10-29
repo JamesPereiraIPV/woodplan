@@ -6,7 +6,6 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { HeadlinersComponent } from './headliners/headliners.component';
 import { MerchComponent } from './merch/merch.component';
-import { LineupComponent } from './lineup/lineup.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { PromotionalComponent } from './promotional/promotional.component';
@@ -20,7 +19,6 @@ import { PromotionalComponent } from './promotional/promotional.component';
     HeroSectionComponent,
     HeadlinersComponent,
     MerchComponent,
-    LineupComponent,
     AboutusComponent,
     ContactsComponent,
     PromotionalComponent

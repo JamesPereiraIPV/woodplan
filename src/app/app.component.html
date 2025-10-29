@@ -1,6 +1,6 @@
 <header class="text-zinc-200">
   <!-- Botão para Mudar Para DarkMode/LightMode -->
-  <div
+  <!-- <div
     id="dark-mode-toogle"
     (click)="toggleDarkMode()"
     class="z-10 fixed top-24 right-0 inline-block w-12 cursor-pointer rounded-l-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 p-2 text-2xl"
@@ -19,7 +19,7 @@
         <i class="fa-solid fa-moon cursor-pointer"></i>
       </span>
     </button>
-  </div>
+  </div> -->
 
   <nav class="absolute top-0 left-0 w-full flex bg-transparent z-20">
     <div class="flex items-center p-3 gap-2 ml-4">
@@ -30,9 +30,6 @@
     <div class="hidden md:flex flex-1 items-center justify-end">
       <!-- Segunda Div -->
       <div class="menu-item" (click)="scrollToSection('headlines')">
-        <span>Cartazes</span>
-      </div>
-      <div class="menu-item" (click)="scrollToSection('lineup')">
         <span>Próximas Datas</span>
       </div>
       <div class="menu-item group">
@@ -43,12 +40,12 @@
           <div
             class="p-4 font-bold hover:bg-white/5 hover:text-zinc-800 transition-colors ease-in-out cursor-pointer"
           >
-            <span>Single Day Ticket</span>
+            <span (click)="scrollToSection('Merch')">T-Shirts</span>
           </div>
           <div
             class="p-4 font-bold hover:bg-white/5 hover:text-zinc-800 transition-colors ease-in-out cursor-pointer"
           >
-            <span>7 Day Ticket</span>
+            <span (click)="scrollToSection('Merch')">Hoddies</span>
           </div>
         </div>
       </div>
@@ -95,7 +92,7 @@
 <app-headliners></app-headliners>
 
 <!-- Próximos Concertos da Banda -->
-<app-lineup></app-lineup>
+<!-- <app-lineup></app-lineup> -->
 
 <!-- Merch da Banda -->
 <app-merch></app-merch>
