@@ -1,0 +1,85 @@
+<section id="aboutus" class="p-4 m-auto max-w-5xl">
+  <div class="mb-12">
+    <h2 class="titulos text-center">Sobre Nós</h2>
+  </div>
+
+  <!-- Primeira linha (3 pessoas) -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center mb-8"
+  >
+    <div
+      *ngFor="let person of persons.slice(0, 3)"
+      class="text-center w-64 h-85 rounded-xl shadow-lg bg-gray-800 text-white overflow-hidden flex flex-col justify-between"
+      [style.backgroundImage]="'url(' + person.image + ')'"
+      [style.backgroundSize]="'cover'"
+      [style.backgroundPosition]="'center'"
+    >
+      <div class="bg-black/40 p-2">
+        <h3 class="text-lg font-semibold">{{ person.name }}</h3>
+        <p class="text-xs uppercase text-gray-300">{{ person.cargo }}</p>
+      </div>
+
+      <div class="bg-black/40 p-2 text-sm text-gray-200 mt-auto">
+        <p>{{ person.description }}</p>
+        <div class="flex justify-center space-x-4 text-gray-300 mt-4">
+          <a
+            [href]="person.instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-pink-500 transition-colors"
+          >
+            <i class="fab fa-instagram text-2xl"></i>
+          </a>
+          <a
+            [href]="person.whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-green-500 transition-colors"
+          >
+            <i class="fab fa-whatsapp text-2xl"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segunda linha (2 pessoas) -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:gap-6 justify-items-center"
+  >
+    <div
+      *ngFor="let person of persons.slice(3, 5)"
+      class="text-center w-64 h-85 rounded-xl shadow-lg bg-gray-800 text-white overflow-hidden flex flex-col justify-between "
+      [style.backgroundImage]="'url(' + person.image + ')'"
+      [style.backgroundSize]="'cover'"
+      [style.backgroundPosition]="'center'"
+    >
+      <div class="bg-black/40 p-2">
+        <h3 class="text-lg font-semibold">{{ person.name }}</h3>
+        <p class="text-xs uppercase text-gray-300">{{ person.cargo }}</p>
+      </div>
+
+      <div class="bg-black/40 p-2 text-sm text-gray-200 mt-auto">
+        <p>{{ person.description }}</p>
+        <div class="flex justify-center space-x-4 text-gray-300 mt-4">
+          <a
+            [href]="person.instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-pink-500 transition-colors"
+          >
+            <i class="fab fa-instagram text-2xl"></i>
+          </a>
+          <a
+            [href]="person.whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-green-500 transition-colors"
+          >
+            <i class="fab fa-whatsapp text-2xl"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

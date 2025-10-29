@@ -1,0 +1,50 @@
+<div id="headlines" class="p-4 m-4 max-w-5xl mx-auto mt-20 text-zinc-900 dark:text-zinc-200">
+  <h2>
+    <span
+      class="titulos"
+      >Cartazes</span
+    >
+  </h2>
+  <p>
+    Estes são os cartazes dos nossos próximos concertos… ou pelo menos alguns deles 😏 Ainda estamos a preparar tudo, mas vai ser barulho, boa onda e muito rock!
+  </p>
+  <div class="flex py-2">
+    <!-- Carousel Arrow Left -->
+    <div
+      id="previous"
+      [ngClass]="{ 'animate-bounce-left': bounceLeft }"
+      (click)="handleClick('left')"
+      class="text-5xl flex justify-center items-center cursor-pointer p-2 relative -top-8"
+    >
+      <i class="fas fa-angle-left"></i>
+    </div>
+
+    <!-- Carousel Items -->
+    <div
+      #carousel
+      class="scroll-smooth flex-1 mt-4 flex w-full gap-4 pb-5 snap-x overflow-x-auto cursor-grab select-none"
+    >
+      <div
+        *ngFor="let band of bands"
+        class="min-w-[80%] md:min-w-[40%] transform transition duration-500 ease-in-out hover:scale-105"
+      >
+        <div
+          [style.backgroundImage]="'url(' + band.image + ')'"
+          class="h-80 w-full snap-center rounded-xl bg-cover bg-center shadow-md shado-black/20"
+        ></div>
+        <h5 class="mt-2">{{ band.name }}</h5>
+        <h6>{{ band.details }}</h6>
+      </div>
+    </div>
+
+    <!-- Carousel Arrow Right -->
+    <div
+      id="next"
+      [ngClass]="{ 'animate-bounce-right': bounceRight }"
+      (click)="handleClick('right')"
+      class="animate-bounce-x text-5xl flex justify-center items-center cursor-pointer p-2 relative -top-8"
+    >
+      <i class="fas fa-angle-right"></i>
+    </div>
+  </div>
+</div>
