@@ -1,9 +1,35 @@
 <div
   *ngIf="isOpen"
-  class="absolute bg-linear-to-r from-gray-500 to-gray-200 left-0 w-full top-[50px] transition-all duration-300"
+  class="absolute left-0 top-[50px] w-full rounded-b-6xl transition-all duration-300 bg-linear-to-b from-black/90 via-gray-800/80 to-gray-200/70"
 >
-  <div class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-700 transition-colors ease-in-out text-white">Home</div>
-  <div class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-700 transition-colors ease-in-out text-white ">Lineup</div>
-  <div class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-700 transition-colors ease-in-out text-white ">Tickets</div>
-  <div class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-700 transition-colors ease-in-out text-white ">Support</div>
+  <div
+    (click)="scrollToSection('headlines')"
+    class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-300 transition-colors ease-in-out text-white"
+  >
+    Próximas Datas
+  </div>
+  <div
+    (click)="scrollToSection('Merch')"
+    class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-300 transition-colors ease-in-out text-white"
+  >
+    Merch
+  </div>
+  <div
+    (click)="scrollToSection('aboutus')"
+    class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-300 transition-colors ease-in-out text-white"
+  >
+    Sobre Nós
+  </div>
+  <div
+    (click)="scrollToSection('Merch')"
+    class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-300 transition-colors ease-in-out text-white"
+  >
+    Galeria
+  </div>
+  <div
+    (click)="scrollToSection('contacts')"
+    class="relative flex h-full cursor-pointer items-center justify-center p-4 font-bold hover:bg-white/5 hover:text-zinc-300 transition-colors ease-in-out text-white"
+  >
+    Support
+  </div>
 </div>

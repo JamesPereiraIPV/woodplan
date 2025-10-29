@@ -1,0 +1,157 @@
+<div
+  id="gallery"
+  class="p-4 max-w-6xl mx-auto text-zinc-900 dark:text-zinc-200"
+>
+  <div class="mb-10 mt-5">
+    <a
+      routerLink="/"
+      class="px-4 py-2 text-white rounded hover:bg-linear-to-r from-gray-400 to-gray-300 transition"
+    >
+      ← Voltar à página principal
+    </a>
+  </div>
+
+  <!-- ========== VÍDEOS ========== -->
+  <h2 class="mb-2"><span class="titulos">Vídeos</span></h2>
+  <p>Alguns momentos gravados — concertos, ensaios e bastidores 🎥</p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+    <div
+      *ngFor="let video of paginatedVideos"
+      (click)="openModal(video, 'video')"
+      class="group relative rounded-xl overflow-hidden bg-zinc-900/5 shadow hover:shadow-lg cursor-pointer transition-all"
+    >
+      <img
+        [src]="video.thumbnail"
+        [alt]="video.title"
+        class="w-full h-56 object-cover"
+      />
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
+      >
+        <i class="fa-solid fa-play text-white text-4xl"></i>
+      </div>
+      <p class="text-center p-2 font-semibold">{{ video.title }}</p>
+    </div>
+  </div>
+
+  <!-- Paginação dos vídeos -->
+  <div class="flex justify-center items-center gap-2 mt-4">
+    <button
+      (click)="currentVideoPage = currentVideoPage - 1"
+      [disabled]="currentVideoPage === 1"
+      class="px-3 py-1 rounded bg-zinc-700/20 hover:bg-zinc-700/40 disabled:opacity-50"
+    >
+      ‹
+    </button>
+    <span>Página {{ currentVideoPage }} / {{ totalVideoPages }}</span>
+    <button
+      (click)="currentVideoPage = currentVideoPage + 1"
+      [disabled]="currentVideoPage === totalVideoPages"
+      class="px-3 py-1 rounded bg-zinc-700/20 hover:bg-zinc-700/40 disabled:opacity-50"
+    >
+      ›
+    </button>
+  </div>
+
+  <!-- ========== FOTOS ========== -->
+  <h2 class="mb-2 mt-12"><span class="titulos">Fotos</span></h2>
+  <p>Alguns dos nossos melhores momentos em imagem 📸</p>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+    <div
+      *ngFor="let foto of paginatedFotos"
+      (click)="openModal(foto, 'photo')"
+      class="group relative rounded-xl overflow-hidden bg-zinc-900/5 shadow hover:shadow-lg cursor-pointer transition-all"
+    >
+      <img
+        [src]="foto.image"
+        [alt]="foto.alt"
+        class="w-full h-64 object-cover"
+      />
+      <div
+        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+      >
+        <i class="fa-solid fa-magnifying-glass text-white text-3xl"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginação das fotos -->
+  <div class="flex justify-center items-center gap-2 mt-4">
+    <button
+      (click)="currentPhotoPage = currentPhotoPage - 1"
+      [disabled]="currentPhotoPage === 1"
+      class="px-3 py-1 rounded bg-zinc-700/20 hover:bg-zinc-700/40 disabled:opacity-50"
+    >
+      ‹
+    </button>
+    <span>Página {{ currentPhotoPage }} / {{ totalPhotoPages }}</span>
+    <button
+      (click)="currentPhotoPage = currentPhotoPage + 1"
+      [disabled]="currentPhotoPage === totalPhotoPages"
+      class="px-3 py-1 rounded bg-zinc-700/20 hover:bg-zinc-700/40 disabled:opacity-50"
+    >
+      ›
+    </button>
+  </div>
+
+  <!-- ========== MODAL VISUALIZAÇÃO ========== -->
+  <div
+    *ngIf="selectedItem"
+    class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+    (click)="closeModal()"
+  >
+    <div
+      class="relative w-full max-w-xl rounded-lg overflow-hidden"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Se for vídeo: 16:9 -->
+      <div *ngIf="modalType === 'video'" class="w-full aspect-video">
+        <video
+          [src]="selectedItem.src"
+          controls
+          autoplay
+          class="w-full h-full object-cover rounded-lg"
+        ></video>
+      </div>
+
+      <!-- Modal Fotos -->
+      <div
+        *ngIf="modalType === 'photo'"
+        class="w-full flex flex-col items-center justify-center max-h-[90vh] p-4"
+        (click)="closeModal()"
+      >
+        <div
+          class="relative flex items-center justify-center"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- Imagem -->
+          <img
+            [src]="selectedItem.image"
+            [alt]="selectedItem.alt"
+            class="w-auto max-h-[70vh] object-contain rounded-lg"
+          />
+
+          <!-- Botão de Fechar sobreposto no canto superior direito -->
+          <button
+            (click)="closeModal()"
+            class="absolute top-2 right-2 text-white text-2xl hover:text-red-400 bg-black/50 rounded-full p-1 transition"
+          >
+            ×
+          </button>
+        </div>
+
+        <!-- Botão Download centralizado abaixo da imagem -->
+        <div class="mt-4">
+          <button
+            (click)="downloadFileBrowser()"
+            class="flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-md"
+          >
+            <i class="fa-solid fa-download"></i> Download
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

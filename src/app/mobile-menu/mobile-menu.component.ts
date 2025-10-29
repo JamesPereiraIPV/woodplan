@@ -9,4 +9,12 @@ import { NgIf} from '@angular/common';
 })
 export class MobileMenuComponent {
   @Input() isOpen = false;
+
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start'});
+    }
+  }
 }
+
