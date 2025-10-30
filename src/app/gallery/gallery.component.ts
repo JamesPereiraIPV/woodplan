@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-gallery',
@@ -10,66 +11,39 @@ import { RouterModule } from '@angular/router';
   styleUrl: './gallery.component.css',
 })
 export class GalleryComponent implements OnInit {
-  fotos = [
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0024.jpg?ga=1',
-      alt: 'Concerto 1',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0035.jpg?ga=1',
-      alt: 'Concerto 2',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0056.jpg?ga=1',
-      alt: 'Backstage',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0025.jpg?ga=1',
-      alt: 'Festival',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0040.jpg?ga=1',
-      alt: 'Ensaio',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0065.jpg?ga=1',
-      alt: 'Estúdio',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0029.jpg?ga=1',
-      alt: 'Palco',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0038.jpg?ga=1',
-      alt: 'Público',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0031.jpg?ga=1',
-      alt: 'Concerto Final',
-    },
-    {
-      image:
-        'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Fotos/IMG-20251020-WA0023.jpg?ga=1',
-      alt: 'Tour',
-    },
-  ];
 
-  videos = [
-    {
-      src: 'https://estgv-my.sharepoint.com/personal/pv24626_alunos_estgv_ipv_pt/Documents/Woodplan/Promocional/Promotional.mp4?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&ga=1',
-      title: 'Promotional',
-      thumbnail: '/images/woodplan-logo-nobackground.png',
-    },
-  ];
+  videos: any[] = [];
+  fotos: any[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  fetchVideos() {
+    this.http.get<any[]>('http://localhost:3000/videos').subscribe({
+      next: (data) => {
+        // Aqui você pode mapear os campos do seu backend para o frontend
+        this.videos = data.map((video) => ({
+          src: video.src, // ou video.url, dependendo do campo no banco
+          title: video.title,
+          thumbnail:
+            video.thumbnail || '/images/woodplan-logo-nobackground.png',
+        }));
+      },
+      error: (err) => console.error('Erro ao buscar vídeos', err),
+    });
+  }
+
+  fetchFotos() {
+    this.http.get<any[]>('http://localhost:3000/photos').subscribe({
+      next: (data) => {
+        // Mapear os campos do backend para os nomes que o template espera
+        this.fotos = data.map((foto) => ({
+          image: foto.image_url,
+          alt: foto.alt_text, // corresponde ao [alt] no template
+        }));
+      },
+      error: (err) => console.error('Erro ao buscar fotos', err),
+    });
+  }
 
   // Páginação
   fotosPerPage = 8;
@@ -111,27 +85,43 @@ export class GalleryComponent implements OnInit {
     this.modalType = null;
   }
 
-  downloadFileBrowser() {
-    const url =
-      this.modalType === 'photo'
-        ? this.selectedItem.image
-        : this.selectedItem.src;
-    const filename =
-      this.modalType === 'photo'
-        ? this.selectedItem.alt + '.jpg'
-        : this.selectedItem.title + '.mp4';
+  async downloadFileBrowser() {
+    try {
+      const url =
+        this.modalType === 'photo'
+          ? this.selectedItem.image
+          : this.selectedItem.src;
+      const filename =
+        this.modalType === 'photo'
+          ? this.selectedItem.alt + '.jpg'
+          : this.selectedItem.title + '.mp4';
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      // Baixa o arquivo como blob
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Erro ao baixar arquivo');
+      const blob = await response.blob();
+
+      // Cria link temporário para download
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Libera memória
+      window.URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error('Falha ao baixar arquivo:', error);
+      alert('Não foi possível baixar o arquivo.');
+    }
   }
 
   ngOnInit(): void {
     // Adiciona dark mode ao html
     document.documentElement.classList.add('dark');
+
+    this.fetchVideos();
+    this.fetchFotos();
   }
 }
