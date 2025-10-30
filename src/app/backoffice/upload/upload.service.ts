@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpRequest,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,8 +21,14 @@ export class UploadService {
     files.forEach((file) => formData.append('photos', file));
     formData.append('alt_text', alt);
 
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
     const req = new HttpRequest('POST', this.apiUrlPhotos, formData, {
       reportProgress: true,
+      headers,
     });
 
     return this.http.request(req);
@@ -35,14 +46,15 @@ export class UploadService {
       formData.append('thumbnail', thumbnail);
     }
 
-    const req = new HttpRequest(
-      'POST',
-      `${this.apiUrlVideos}`,
-      formData,
-      {
-        reportProgress: true,
-      }
-    );
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    const req = new HttpRequest('POST', this.apiUrlVideos, formData, {
+      reportProgress: true,
+      headers,
+    });
 
     return this.http.request(req);
   }
