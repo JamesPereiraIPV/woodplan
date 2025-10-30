@@ -5,6 +5,6 @@ const { getAllVideos, uploadVideo } = require('../controllers/videoController');
 
 router.get('/', getAllVideos);
 
-router.post('/uploads', upload.array('videos', 50), uploadVideo);
+router.post('/uploads', upload.array('videos', 1), uploadVideo);
 
 module.exports = router;

@@ -8,6 +8,7 @@ import { AboutusComponent } from '../aboutus/aboutus.component';
 import { ContactsComponent } from '../contacts/contacts.component';
 import { PromotionalComponent } from '../promotional/promotional.component';
 import { RouterModule } from '@angular/router';
+import { CrewComponent } from '../crew/crew.component';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,8 @@ import { RouterModule } from '@angular/router';
     MerchComponent,
     AboutusComponent,
     ContactsComponent,
-    PromotionalComponent
+    PromotionalComponent,
+    CrewComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

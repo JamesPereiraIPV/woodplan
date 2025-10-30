@@ -5,13 +5,17 @@ const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    // Escolhe a pasta com base no fieldname
     let folder = "uploads/";
 
-    if (file.fieldname === "photos" || file.mimetype.startsWith("image/")) {
+    if (file.fieldname === "cartazes") {
+      folder += "cartazes/";
+    } else if (
+      file.fieldname === "photos" ||
+      file.mimetype.startsWith("image/")
+    ) {
       folder += "photos/";
     } else if (
-      file.fieldname === "video" ||
+      file.fieldname === "videos" ||
       file.mimetype.startsWith("video/")
     ) {
       folder += "videos/";

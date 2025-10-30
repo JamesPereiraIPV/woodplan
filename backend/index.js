@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth');
 const { authenticateToken } = require('./controllers/authController');
 const videoRoutes = require('./routes/videos');
 const photoRoutes = require('./routes/photos');
+const cartazesRoutes = require('./routes/cartazes');
 
 // Middleware base
 app.use(cors());
@@ -25,8 +26,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/auth', authRoutes);
 
 // 🔒 Rotas protegidas (só com token)
-app.use('/videos', authenticateToken, videoRoutes);
-app.use('/photos', authenticateToken, photoRoutes);
+app.use('/videos', videoRoutes);
+app.use('/photos', photoRoutes);
+app.use('/cartazes', cartazesRoutes);
 
 // Rota teste
 app.get('/', (req, res) => res.send('Backend funcionando!'));

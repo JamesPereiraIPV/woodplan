@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 export class UploadService {
   private apiUrlVideos = 'http://localhost:3000/videos/uploads';
   private apiUrlPhotos = 'http://localhost:3000/photos/uploads';
+  private apiUrlCartazes = 'http://localhost:3000/cartazes/uploads';
 
   constructor(private http: HttpClient) {}
 
@@ -52,6 +53,33 @@ export class UploadService {
     });
 
     const req = new HttpRequest('POST', this.apiUrlVideos, formData, {
+      reportProgress: true,
+      headers,
+    });
+
+    return this.http.request(req);
+  }
+
+  uploadCartaz(
+    file: File,
+    barname: string,
+    date: string,
+    location: string,
+    mapsLink: string
+  ): Observable<HttpEvent<any>> {
+    const formData = new FormData();
+    formData.append('cartazes', file);
+    formData.append('barname', barname);
+    formData.append('date', date);
+    formData.append('location', location);
+    formData.append('mapsLink', mapsLink);
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    const req = new HttpRequest('POST', this.apiUrlCartazes, formData, {
       reportProgress: true,
       headers,
     });
