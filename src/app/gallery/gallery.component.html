@@ -1,6 +1,6 @@
 <div
   id="gallery"
-  class="p-4 max-w-6xl mx-auto text-zinc-900 dark:text-zinc-200"
+  class="p-4 max-w-6xl mx-auto text-zinc-900 dark:text-zinc-200 h-screen"
 >
   <div class="mb-10 mt-5">
     <a
@@ -16,23 +16,30 @@
   <p>Alguns momentos gravados — concertos, ensaios e bastidores 🎥</p>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-    <div
-      *ngFor="let video of paginatedVideos"
-      (click)="openModal(video, 'video')"
-      class="group relative rounded-xl overflow-hidden bg-zinc-900/5 shadow hover:shadow-lg cursor-pointer transition-all"
-    >
-      <img
-        [src]="video.thumbnail"
-        [alt]="video.title"
-        class="w-full h-56 object-cover"
-      />
+    <ng-container *ngIf="paginatedVideos.length > 0; else noVideos">
       <div
-        class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
+        *ngFor="let video of paginatedVideos"
+        (click)="openModal(video, 'video')"
+        class="group relative rounded-xl overflow-hidden bg-zinc-900/5 shadow hover:shadow-lg cursor-pointer transition-all"
       >
-        <i class="fa-solid fa-play text-white text-4xl"></i>
+        <img
+          [src]="video.thumbnail"
+          [alt]="video.title"
+          class="w-full h-56 object-cover"
+        />
+        <div
+          class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <i class="fa-solid fa-play text-white text-4xl"></i>
+        </div>
+        <p class="text-center p-2 font-semibold">{{ video.title }}</p>
       </div>
-      <p class="text-center p-2 font-semibold">{{ video.title }}</p>
-    </div>
+    </ng-container>
+    <ng-template #noVideos>
+      <p class="col-span-full text-center text-zinc-500 mt-4">
+        Vídeos em breve 🎬
+      </p>
+    </ng-template>
   </div>
 
   <!-- Paginação dos vídeos -->
@@ -59,22 +66,29 @@
   <p>Alguns dos nossos melhores momentos em imagem 📸</p>
 
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-    <div
-      *ngFor="let foto of paginatedFotos"
-      (click)="openModal(foto, 'photo')"
-      class="group relative rounded-xl overflow-hidden bg-zinc-900/5 shadow hover:shadow-lg cursor-pointer transition-all"
-    >
-      <img
-        [src]="foto.image"
-        [alt]="foto.alt"
-        class="w-full h-64 object-cover"
-      />
+    <ng-container *ngIf="paginatedFotos.length > 0; else noFotos">
       <div
-        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+        *ngFor="let foto of paginatedFotos"
+        (click)="openModal(foto, 'photo')"
+        class="group relative rounded-xl overflow-hidden bg-zinc-900/5 shadow hover:shadow-lg cursor-pointer transition-all"
       >
-        <i class="fa-solid fa-magnifying-glass text-white text-3xl"></i>
+        <img
+          [src]="foto.image"
+          [alt]="foto.alt"
+          class="w-full h-64 object-cover"
+        />
+        <div
+          class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+        >
+          <i class="fa-solid fa-magnifying-glass text-white text-3xl"></i>
+        </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #noFotos>
+      <p class="col-span-full text-center text-zinc-500 mt-4">
+        Fotos em breve 📸
+      </p>
+    </ng-template>
   </div>
 
   <!-- Paginação das fotos -->
