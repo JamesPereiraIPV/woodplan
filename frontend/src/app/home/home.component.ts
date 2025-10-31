@@ -46,13 +46,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    const savedTheme = localStorage.getItem('theme');
-    this.isDarkMode = savedTheme === 'dark';
-    if (this.isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.add('dark');
   }
 
   scrollToSection(sectionId: string): void {
