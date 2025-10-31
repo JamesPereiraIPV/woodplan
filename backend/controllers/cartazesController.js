@@ -1,4 +1,5 @@
 const db = require("../db");
+const { uploadToCloudinary } = require("../uploadConfig");
 
 // GET - listar todos os cartazes
 exports.getCartazes = (req, res) => {
@@ -12,7 +13,7 @@ exports.getCartazes = (req, res) => {
 };
 
 // POST - upload de cartaz para Cloudinary
-exports.uploadCartaz = (req, res) => {
+exports.uploadCartaz = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "Nenhum ficheiro enviado!" });
@@ -20,8 +21,9 @@ exports.uploadCartaz = (req, res) => {
 
     const { barname, date, location, mapsLink } = req.body;
 
-    // URL da Cloudinary
-    const imagePath = req.file.path;
+    // Envia para Cloudinary
+    const result = await uploadToCloudinary(req.file, "cartazes");
+    const imageUrl = result.secure_url; // URL final no Cloudinary
 
     // Converter data para formato MySQL
     const mysqlDate = new Date(date).toISOString().slice(0, 19).replace("T", " ");
@@ -33,20 +35,20 @@ exports.uploadCartaz = (req, res) => {
 
     db.query(
       sql,
-      [barname, imagePath, mysqlDate, location, mapsLink],
-      (err, result) => {
+      [barname, imageUrl, mysqlDate, location, mapsLink],
+      (err, resultDb) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ error: "Erro ao salvar cartaz no banco" });
         }
 
         res.status(201).json({
-          id: result.insertId,
+          id: resultDb.insertId,
           barname,
-          image: imagePath,
+          image: imageUrl,
           date,
           location,
-          mapsLink
+          mapsLink,
         });
       }
     );

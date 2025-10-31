@@ -1,42 +1,51 @@
-const db = require("../db");
+const db = require('../db');
+const { uploadToCloudinary } = require('../uploadConfig');
 
 exports.getAllPhotos = (req, res) => {
-  db.query("SELECT * FROM photos", (err, results) => {
+  db.query('SELECT * FROM photos', (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(results);
   });
 };
 
-exports.uploadPhoto = (req, res) => {
-  if (!req.files || req.files.length === 0) {
-    return res.status(400).json({ error: "Nenhum ficheiro enviado!" });
-  }
-
-  // Se o usuário não forneceu alt_text, cria altText automático
-  const photos = req.files.map((file, index) => {
-    let altText = req.body.alt_text;
-
-    // Se houver apenas um alt_text ou nenhum, gera automaticamente
-    if (!altText || req.files.length > 1) {
-      altText = `woodplan_${index + 1}`;
+exports.uploadPhoto = async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ error: 'Nenhum ficheiro enviado!' });
     }
 
-    return {
-      imageUrl: `http://localhost:3000/uploads/photos/${file.filename}`,
-      altText: altText,
-    };
-  });
+    const lastIdResult = await new Promise((resolve, reject) => {
+      db.query('SELECT MAX(id) AS lastId FROM photos', (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    });
+    const lastId = lastIdResult[0].lastId || 0;
 
-  // Inserir todas no DB
-  photos.forEach((photo) => {
-    db.query(
-      "INSERT INTO photos (image_url, alt_text, created_at) VALUES (?, ?, NOW())",
-      [photo.imageUrl, photo.altText]
+    // Faz upload de todas as fotos para Cloudinary
+    const photos = await Promise.all(
+      req.files.map(async (file, index) => {
+        const result = await uploadToCloudinary(file, 'photos');
+        const altText =
+          req.body.alt_text && req.files.length === 1
+            ? req.body.alt_text
+            : `woodplan_${lastId + index + 1}`;
+        return [result.secure_url, altText, new Date()];
+      })
     );
-  });
 
-  res.status(201).json({
-    message: "Fotos carregadas com sucesso!",
-    photos: photos.map((p) => p.imageUrl),
-  });
+    // Insere no DB
+    const sql = 'INSERT INTO photos (image_url, alt_text, created_at) VALUES ?';
+    db.query(sql, [photos], (err) => {
+      if (err) return res.status(500).json({ error: err.message });
+      const insertedUrls = photos.map((p) => p[0]);
+      res.status(201).json({
+        message: 'Fotos carregadas com sucesso!',
+        photos: insertedUrls,
+      });
+    });
+  } catch (err) {
+    console.error('Erro ao enviar fotos:', err);
+    res.status(500).json({ error: err.message || err });
+  }
 };
