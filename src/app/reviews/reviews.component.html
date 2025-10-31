@@ -1,0 +1,60 @@
+<div
+  id="reviews"
+  class="p-10 mx-10 text-zinc-900 dark:text-zinc-200"
+>
+  <h2 class="mb-2">
+    <span class="titulos">O que o público diz</span>
+  </h2>
+  <p class="text-zinc-600 dark:text-zinc-400 mb-4">
+    Algumas das opiniões de quem já esteve connosco. ❤️
+  </p>
+
+  <div class="flex py-2 items-center">
+    <!-- Left Arrow -->
+    <div
+      id="previous"
+      [ngClass]="{ 'animate-bounce-left': bounceLeft }"
+      (click)="handleClick('left')"
+      class="text-4xl flex justify-center items-center cursor-pointer p-2"
+    >
+      <i class="fas fa-angle-left"></i>
+    </div>
+
+    <!-- Carousel -->
+    <div
+      #carousel
+      class="scroll-smooth flex-1 mt-4 flex w-full gap-4 pb-5 snap-x overflow-x-auto cursor-grab select-none"
+    >
+      <div
+        *ngFor="let r of reviews"
+        class="min-w-[85%] md:min-w-[40%] lg:min-w-[30%] bg-zinc-100 dark:bg-zinc-800 rounded-xl shadow-md p-4 flex flex-col justify-between transition-transform duration-300 ease-in-out hover:scale-[1.03] snap-start"
+      >
+        <!-- Review Text -->
+        <p class="text-sm italic mb-3">"{{ r.review }}"</p>
+
+        <!-- Reviewer Info -->
+        <div class="flex items-center gap-3 mt-auto">
+          <img
+            [src]="r.photo"
+            [alt]="r.name"
+            class="w-12 h-12 rounded-full object-cover border border-zinc-300 dark:border-zinc-600"
+          />
+          <div>
+            <h5 class="font-semibold">{{ r.name }}</h5>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Arrow -->
+    <div
+      id="next"
+      [ngClass]="{ 'animate-bounce-right': bounceRight }"
+      (click)="handleClick('right')"
+      class="text-4xl flex justify-center items-center cursor-pointer p-2"
+    >
+      <i class="fas fa-angle-right"></i>
+    </div>
+  </div>
+</div>

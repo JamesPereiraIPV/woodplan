@@ -10,70 +10,133 @@
 
   <!-- ========== UPLOAD DE FOTOS ========== -->
   <section class="mb-10">
-    <h2 class="mb-2"><span class="titulos">Fotos</span>📸</h2>
-    <p class="mb-4 text-zinc-600 dark:text-zinc-300">Carrega aqui as fotos!</p>
+    <h2 class="mb-2"><span class="titulos">Fotos</span> 📸</h2>
+    <p class="mb-6 text-zinc-600 dark:text-zinc-300">Carrega aqui as fotos!</p>
 
-    <div class="flex flex-col sm:flex-row gap-4 items-center">
-      <input
-        type="file"
-        name="photos"
-        (change)="onPhotoSelected($event)"
-        multiple
-        class="file-input w-full sm:w-auto text-zinc-700 dark:text-zinc-200 dark:bg-zinc-800 border rounded px-3 py-2 cursor-pointer hover:border-zinc-400 transition"
-      />
-      <button
-        (click)="uploadPhoto()"
-        class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 transition"
-      >
-        Enviar Foto
-      </button>
-    </div>
-
-    <!-- Barra de progresso -->
     <div
-      *ngIf="photoProgress"
-      class="mt-3 w-full dark:bg-zinc-700 rounded-full h-4 overflow-hidden"
+      class="bg-zinc-100 dark:bg-zinc-900/50 p-6 rounded-lg shadow-md border border-zinc-200 dark:border-zinc-700"
     >
-      <div
-        class="bg-indigo-600 h-4 rounded-full transition-all"
-        [style.width.%]="photoProgress"
-      ></div>
+      <!-- Inputs -->
+      <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <div class="flex-1 w-full">
+          <label
+            for="photoFile"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >Selecionar fotos</label
+          >
+          <input
+            id="photoFile"
+            type="file"
+            name="photos"
+            (change)="onPhotoSelected($event)"
+            multiple
+            class="file-input w-full text-zinc-700 dark:text-zinc-200 dark:bg-zinc-800 border rounded px-3 py-2 cursor-pointer hover:border-zinc-400 transition"
+          />
+        </div>
+
+        <div class="pt-6 sm:pt-0">
+          <button
+            (click)="uploadPhoto()"
+            class="px-5 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+          >
+            Enviar Foto
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Progresso -->
+      <div *ngIf="photoProgress" class="mt-6">
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >Upload em progresso</span
+          >
+          <span class="text-sm text-zinc-500 dark:text-zinc-400"
+            >{{ photoProgress | number : "1.0-0" }}%</span
+          >
+        </div>
+
+        <div
+          class="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-4 overflow-hidden"
+        >
+          <div
+            class="bg-indigo-600 h-4 rounded-full transition-all duration-300 ease-out"
+            [style.width.%]="photoProgress"
+          ></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <hr class="my-8 border-zinc-300 dark:border-zinc-700" />
 
   <!-- ========== UPLOAD DE VÍDEOS ========== -->
-  <section>
-    <h2 class="mb-2"><span class="titulos">Vídeos</span>🎥</h2>
-    <p class="mb-4 text-zinc-600 dark:text-zinc-300">Carrega aqui os vídeos!</p>
+  <section class="mt-10">
+    <h2 class="mb-2"><span class="titulos">Vídeos</span> 🎥</h2>
+    <p class="mb-6 text-zinc-600 dark:text-zinc-300">Carrega aqui os vídeos!</p>
 
-    <div class="flex flex-col sm:flex-row gap-4 items-center">
-      <input
-        type="file"
-        name="videos"
-        (change)="onVideoSelected($event)"
-        multiple
-        class="file-input w-full sm:w-auto text-zinc-700 dark:text-zinc-200 dark:bg-zinc-800 border rounded px-3 py-2 cursor-pointer hover:border-zinc-400 transition"
-      />
-      <input
-        type="text"
-        placeholder="Título do vídeo"
-        [(ngModel)]="videoTitle"
-        class="w-full sm:flex-1 px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
-      <input
-        type="text"
-        placeholder="URL do thumbnail (opcional)"
-        [(ngModel)]="videoThumbnail"
-        class="w-full sm:flex-1 px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
-      <button
-        (click)="uploadVideo()"
-        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 transition"
-      >
-        Enviar Vídeo
-      </button>
+    <div
+      class="bg-zinc-100 dark:bg-zinc-900/50 p-6 rounded-lg shadow-md border border-zinc-200 dark:border-zinc-700"
+    >
+      <!-- Primeira linha: File + Título -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-4">
+        <div class="flex-1">
+          <label
+            for="videoFile"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >Selecionar ficheiro</label
+          >
+          <input
+            id="videoFile"
+            type="file"
+            name="videos"
+            (change)="onVideoSelected($event)"
+            multiple
+            class="file-input w-full text-zinc-700 dark:text-zinc-200 dark:bg-zinc-800 border rounded px-3 py-2 cursor-pointer hover:border-zinc-400 transition"
+          />
+        </div>
+
+        <div class="flex-1">
+          <label
+            for="videoTitle"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >Título do vídeo</label
+          >
+          <input
+            id="videoTitle"
+            type="text"
+            placeholder="Ex: Live no HardBar"
+            [(ngModel)]="videoTitle"
+            class="w-full px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+      </div>
+
+      <!-- Segunda linha: URL + Botão -->
+      <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <div class="flex-1 w-full">
+          <label
+            for="videoThumbnail"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+            >URL do thumbnail (opcional)</label
+          >
+          <input
+            id="videoThumbnail"
+            type="text"
+            placeholder="https://exemplo.com/thumb.jpg"
+            [(ngModel)]="videoThumbnail"
+            class="w-full px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+
+        <div class="pt-6 sm:pt-0">
+          <button
+            (click)="uploadVideo()"
+            class="px-5 py-2 bg-green-600 text-white rounded hover:bg-green-500 focus:ring-2 focus:ring-green-400 focus:outline-none transition"
+          >
+            Enviar Vídeo
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Barra de progresso -->
@@ -91,48 +154,109 @@
   <hr class="my-8 border-zinc-300 dark:border-zinc-700" />
 
   <!-- ========== UPLOAD DE CARTAZES ========== -->
+  <!-- ========== UPLOAD DE CARTAZES ========== -->
   <section class="mb-10 mt-10">
-    <h2 class="mb-2"><span class="titulos">Cartazes</span>📰</h2>
-    <p class="mb-4 text-zinc-600 dark:text-zinc-300">
+    <h2 class="mb-2"><span class="titulos">Cartazes</span> 📰</h2>
+    <p class="mb-6 text-zinc-600 dark:text-zinc-300">
       Carrega aqui os cartazes!
     </p>
 
-    <div class="flex flex-col sm:flex-row gap-4 items-center">
-      <input
-        type="file"
-        name="cartazes"
-        (change)="onCartazSelected($event)"
-        class="file-input w-full sm:w-auto text-zinc-700 dark:text-zinc-200 dark:bg-zinc-800 border rounded px-3 py-2 cursor-pointer hover:border-zinc-400 transition"
-      />
-      <input
-        type="text"
-        placeholder="Nome do bar"
-        [(ngModel)]="cartazBarname"
-        class="w-full sm:flex-1 px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
-      <input
-        type="datetime-local"
-        [(ngModel)]="cartazDate"
-        class="w-full sm:flex-1 px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
-      <input
-        type="text"
-        placeholder="Localização"
-        [(ngModel)]="cartazLocation"
-        class="w-full sm:flex-1 px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
-      <input
-        type="text"
-        placeholder="Link do mapa"
-        [(ngModel)]="cartazMapsLink"
-        class="w-full sm:flex-1 px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
-      <button
-        (click)="uploadCartaz()"
-        class="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-500 transition"
-      >
-        Enviar Cartaz
-      </button>
+    <div
+      class="bg-zinc-100 dark:bg-zinc-900/50 p-6 rounded-lg shadow-md border border-zinc-200 dark:border-zinc-700"
+    >
+      <!-- Primeira linha: Ficheiro + Nome do bar + Data -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-4">
+        <div class="flex-1">
+          <label
+            for="cartazFile"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
+            Selecionar cartaz
+          </label>
+          <input
+            id="cartazFile"
+            type="file"
+            name="cartazes"
+            (change)="onCartazSelected($event)"
+            class="file-input w-full text-zinc-700 dark:text-zinc-200 dark:bg-zinc-800 border rounded px-3 py-2 cursor-pointer hover:border-zinc-400 transition"
+          />
+        </div>
+
+        <div class="flex-1">
+          <label
+            for="cartazBarname"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
+            Nome do bar
+          </label>
+          <input
+            id="cartazBarname"
+            type="text"
+            placeholder="Ex: Bar 21"
+            [(ngModel)]="cartazBarname"
+            class="w-full px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+
+        <div class="flex-1">
+          <label
+            for="cartazDate"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
+            Data e hora
+          </label>
+          <input
+            id="cartazDate"
+            type="datetime-local"
+            [(ngModel)]="cartazDate"
+            class="w-full px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+      </div>
+
+      <!-- Segunda linha: Localização + Link do mapa + Botão -->
+      <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <div class="flex-1">
+          <label
+            for="cartazLocation"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
+            Localização
+          </label>
+          <input
+            id="cartazLocation"
+            type="text"
+            placeholder="Ex: Enxofaes"
+            [(ngModel)]="cartazLocation"
+            class="w-full px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+
+        <div class="flex-1">
+          <label
+            for="cartazMapsLink"
+            class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+          >
+            Link do mapa
+          </label>
+          <input
+            id="cartazMapsLink"
+            type="text"
+            placeholder="https://maps.app.goo.gl/..."
+            [(ngModel)]="cartazMapsLink"
+            class="w-full px-3 py-2 border rounded text-zinc-800 dark:text-zinc-200 dark:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+        </div>
+
+        <div class="pt-6 sm:pt-0">
+          <button
+            (click)="uploadCartaz()"
+            class="px-5 py-2 bg-orange-600 text-white rounded hover:bg-orange-500 focus:ring-2 focus:ring-orange-400 focus:outline-none transition"
+          >
+            Enviar Cartaz
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Barra de progresso -->

@@ -13,7 +13,7 @@ export interface Video {
   providedIn: 'root' // serviço global
 })
 export class VideoService {
-  private apiUrl = 'http://localhost:3000/videos'; // URL do seu backend
+  private apiUrl = 'http://localhost:3000/videos';
 
   constructor(private http: HttpClient) {}
 

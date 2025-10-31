@@ -9,6 +9,7 @@ import { ContactsComponent } from '../contacts/contacts.component';
 import { PromotionalComponent } from '../promotional/promotional.component';
 import { RouterModule } from '@angular/router';
 import { CrewComponent } from '../crew/crew.component';
+import { ReviewsComponent } from '../reviews/reviews.component';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,8 @@ import { CrewComponent } from '../crew/crew.component';
     AboutusComponent,
     ContactsComponent,
     PromotionalComponent,
-    CrewComponent
+    CrewComponent,
+    ReviewsComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
