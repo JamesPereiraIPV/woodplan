@@ -51,7 +51,7 @@ export class HeadlinersComponent implements OnInit {
   /** Corrige a URL da imagem (acrescenta domínio) */
   private formatImageUrl(relativePath: string): string {
     if (relativePath.startsWith('http')) return relativePath;
-    return `http://localhost:3000${relativePath}`;
+    return `https://woodplan.onrender.com${relativePath}`;
   }
 
   // --- Carousel Controls ---

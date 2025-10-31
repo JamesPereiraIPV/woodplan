@@ -18,7 +18,7 @@ export class GalleryComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   fetchVideos() {
-    this.http.get<any[]>('http://localhost:3000/videos').subscribe({
+    this.http.get<any[]>('https://woodplan.onrender.com/videos').subscribe({
       next: (data) => {
         // Aqui você pode mapear os campos do seu backend para o frontend
         this.videos = data.map((video) => ({
@@ -33,7 +33,7 @@ export class GalleryComponent implements OnInit {
   }
 
   fetchFotos() {
-    this.http.get<any[]>('http://localhost:3000/photos').subscribe({
+    this.http.get<any[]>('https://woodplan.onrender.com/photos').subscribe({
       next: (data) => {
         // Mapear os campos do backend para os nomes que o template espera
         this.fotos = data.map((foto) => ({

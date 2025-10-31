@@ -15,7 +15,7 @@ export interface Cartaz {
   providedIn: 'root',
 })
 export class CartazesService {
-  private apiUrl = 'http://localhost:3000/cartazes'; // <- ajusta o URL do teu backend
+  private apiUrl = 'https://woodplan.onrender.com/cartazes'; // <- ajusta o URL do teu backend
 
   constructor(private http: HttpClient) {}
 

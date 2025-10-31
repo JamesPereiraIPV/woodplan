@@ -11,9 +11,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UploadService {
-  private apiUrlVideos = 'http://localhost:3000/videos/uploads';
-  private apiUrlPhotos = 'http://localhost:3000/photos/uploads';
-  private apiUrlCartazes = 'http://localhost:3000/cartazes/uploads';
+  private apiUrlVideos = 'https://woodplan.onrender.com/videos/uploads';
+  private apiUrlPhotos = 'https://woodplan.onrender.com/photos/uploads';
+  private apiUrlCartazes = 'https://woodplan.onrender.com/cartazes/uploads';
 
   constructor(private http: HttpClient) {}
 

@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.http
-      .post<{ token: string }>('http://localhost:3000/auth/login', {
+      .post<{ token: string }>('https://woodplan.onrender.com/auth/login', {
         email: this.email,
         password: this.password,
       })

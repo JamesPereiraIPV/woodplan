@@ -13,7 +13,7 @@ export interface Fotos {
   providedIn: 'root'
 })
 export class VideoService {
-  private apiUrl = 'http://localhost:3000/photos';
+  private apiUrl = 'https://woodplan.onrender.com/photos';
 
   constructor(private http: HttpClient) {}
 
